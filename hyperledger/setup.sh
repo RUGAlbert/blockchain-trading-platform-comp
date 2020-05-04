@@ -18,11 +18,11 @@ function removeWorkDir(){
 
 function start(){
 	setWorkDir
-	//first setup network
+	#first setup network
 
 	./network.sh up
 	
-	//start up chaincode
+	#start up chaincode
 	./network.sh createChannel
 	./network.sh deployCC
 	removeWorkDir
