@@ -9,7 +9,7 @@ else
 fi
 
 function setWorkDir(){
-	cd Network
+	cd test-network
 }
 
 function removeWorkDir(){
@@ -21,6 +21,10 @@ function start(){
 	//first setup network
 
 	./network.sh up
+	
+	//start up chaincode
+	./network.sh createChannel
+	./network.sh deployCC
 	removeWorkDir
 }
 
@@ -50,7 +54,7 @@ if [ "${MODE}" == "start" ]; then
 elif [ "${MODE}" == "stop" ]; then
   stop
 elif [ "${MODE}" == "restart" ]; then
-  stop
+  restart
 else
   printHelp
   exit 1
