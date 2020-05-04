@@ -24,7 +24,7 @@ function start(){
 	
 	#start up chaincode
 	./network.sh createChannel
-	./network.sh deployCC
+	#./network.sh deployCC
 	removeWorkDir
 }
 
@@ -49,12 +49,24 @@ function printHelp(){
 	echo "      - 'restart' - restart the docker"
 }
 
+function installContracts(){
+	source ./peerManager.sh init
+	source ./peerManager.sh org1
+	source ./configOrg/configCa.sh
+	peer chaincode install -n evmcc -l golang -v 0 -p ./../../fabric-chaincode-evm/evmcc
+	source ./peerManager.sh org2
+	peer chaincode install -n evmcc -l golang -v 0 -p ./../../fabric-chaincode-evm/evmcc
+	peer chaincode instantiate -n evmcc -v 0 -C mychannel -c '{"Args":[]}' -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile $ORDERER_CA
+}
+
 if [ "${MODE}" == "start" ]; then
   start
 elif [ "${MODE}" == "stop" ]; then
   stop
 elif [ "${MODE}" == "restart" ]; then
   restart
+elif [ "${MODE}" == "install" ]; then
+	installContracts
 else
   printHelp
   exit 1
