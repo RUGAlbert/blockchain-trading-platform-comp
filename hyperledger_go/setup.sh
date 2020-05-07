@@ -52,7 +52,9 @@ function printHelp(){
 
 function deploy(){
 	setWorkDir
-	./network.sh deployCC -l javascript
+	peer lifecycle chaincode queryinstalled -O json >&log.txt
+	PACKAGE_VERSION=$(($(echo $(grep -Po '"version": ".*?[^\\]"' log.txt) | tr -dc '0-9')+1))
+	./network.sh deployCC -l golang -v $PACKAGE_VERSION
 	removeWorkDir
 }
 

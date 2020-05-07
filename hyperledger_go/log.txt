@@ -1,0 +1,22 @@
+{
+	"installed_chaincodes": [
+		{
+			"package_id": "trading_1:17ac5a2e72eb3825f8cf386619c2df623e8f0512719d433460930301ed059c09",
+			"label": "trading_1"
+		},
+		{
+			"package_id": "trading_2:e528344412cd7488c3de2bedd4249ce8277b5d9190fefb90ba95aa0facf6764c",
+			"label": "trading_2",
+			"references": {
+				"mychannel": {
+					"chaincodes": [
+						{
+							"name": "trading",
+							"version": "2"
+						}
+					]
+				}
+			}
+		}
+	]
+}
