@@ -1,0 +1,140 @@
+
+########################################
+Doing tests with 2 bids and offers
+########################################
+
+Done all for john@acme.com using publishBid
+Done all for anil@acme.com using publishOffer
+
+real	0m8.938s
+user	0m1.920s
+sys	0m0.110s
+Done all for john@acme.com using publishBid
+Done all for anil@acme.com using publishOffer
+
+real	0m8.718s
+user	0m1.870s
+sys	0m0.112s
+Done all for john@acme.com using publishBid
+Done all for anil@acme.com using publishOffer
+
+real	0m8.590s
+user	0m1.965s
+sys	0m0.096s
+Done all for john@acme.com using publishBid
+Done all for anil@acme.com using publishOffer
+
+real	0m8.557s
+user	0m1.881s
+sys	0m0.118s
+Done all for john@acme.com using publishBid
+Done all for anil@acme.com using publishOffer
+
+real	0m8.678s
+user	0m1.914s
+sys	0m0.103s
+
+########################################
+Doing tests with 10 bids and offers
+########################################
+
+Done all for john@acme.com using publishBid
+Done all for anil@acme.com using publishOffer
+
+real	0m8.714s
+user	0m2.193s
+sys	0m0.082s
+Done all for john@acme.com using publishBid
+Done all for anil@acme.com using publishOffer
+
+real	0m8.795s
+user	0m2.305s
+sys	0m0.098s
+Done all for john@acme.com using publishBid
+Done all for anil@acme.com using publishOffer
+
+real	0m8.807s
+user	0m2.263s
+sys	0m0.086s
+Done all for john@acme.com using publishBid
+Done all for anil@acme.com using publishOffer
+
+real	0m8.687s
+user	0m2.191s
+sys	0m0.112s
+Done all for john@acme.com using publishBid
+Done all for anil@acme.com using publishOffer
+
+real	0m8.774s
+user	0m2.254s
+sys	0m0.092s
+
+########################################
+Doing tests with 100 bids and offers
+########################################
+
+Done all for john@acme.com using publishBid
+Done all for anil@acme.com using publishOffer
+
+real	0m11.153s
+user	0m4.979s
+sys	0m0.121s
+Done all for john@acme.com using publishBid
+Done all for anil@acme.com using publishOffer
+
+real	0m10.995s
+user	0m4.834s
+sys	0m0.112s
+Done all for john@acme.com using publishBid
+Done all for anil@acme.com using publishOffer
+
+real	0m11.084s
+user	0m4.940s
+sys	0m0.117s
+Done all for john@acme.com using publishBid
+Done all for anil@acme.com using publishOffer
+
+real	0m11.063s
+user	0m4.848s
+sys	0m0.123s
+Done all for john@acme.com using publishBid
+Done all for anil@acme.com using publishOffer
+
+real	0m11.062s
+user	0m4.871s
+sys	0m0.113s
+
+########################################
+Doing tests with 1000 bids and offers
+########################################
+
+Done all for john@acme.com using publishBid
+Done all for anil@acme.com using publishOffer
+
+real	0m32.342s
+user	0m25.827s
+sys	0m0.233s
+Done all for john@acme.com using publishBid
+Done all for anil@acme.com using publishOffer
+
+real	0m33.621s
+user	0m26.216s
+sys	0m0.240s
+Done all for john@acme.com using publishBid
+Done all for anil@acme.com using publishOffer
+
+real	0m32.750s
+user	0m25.729s
+sys	0m0.218s
+Done all for john@acme.com using publishBid
+Done all for anil@acme.com using publishOffer
+
+real	0m32.427s
+user	0m26.302s
+sys	0m0.218s
+Done all for john@acme.com using publishBid
+Done all for anil@acme.com using publishOffer
+
+real	0m33.991s
+user	0m26.759s
+sys	0m0.248s
