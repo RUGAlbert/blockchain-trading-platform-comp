@@ -84,7 +84,7 @@ function execInsert(){
 
 function benchmark(){
 	setGatewayDir
-	for amount in 2 10 100 1000
+	for amount in 2 10 100 200 300 400 500 600 700 800 900 1000
 	do
 		echo ""
 		echo "########################################"
