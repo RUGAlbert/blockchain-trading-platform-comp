@@ -18,6 +18,7 @@ import (
 	//"crypto/x509"
 )
 
+//executes richt query and returns result
 func ExecuteQuery(stub shim.ChaincodeStubInterface, query string) (string, error) {
 	var pagesize int32 = 20
 	bookmark := ""

@@ -68,6 +68,8 @@ async function exec() {
     });
 }
 
+//injects random offers and bids, first creates contract to also test it, then it will inject half of them
+// as bidding party and half of them as offering party
 async function injectRandomBidsAndOffers(amount){
     var gateway = await setupGateway(USER_ID);
     let network = await gateway.getNetwork(NETWORK_NAME);
@@ -83,6 +85,7 @@ async function injectRandomBidsAndOffers(amount){
     gateway.disconnect();
 }
 
+//Insert data as random user
 async function insertRandomAsUser(userID, networkID, contractID, funcName, amount){
     let promises = [];
     var gatewayBid = await setupGateway(userID);
@@ -102,10 +105,12 @@ async function insertRandomAsUser(userID, networkID, contractID, funcName, amoun
     });
 }
 
+//get random date between start and end
 function randomDate(start, end) {
     return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 }
 
+//change date format
 function ISODateString(d){
     function pad(n){return n<10 ? '0'+n : n}
 
@@ -117,7 +122,7 @@ function ISODateString(d){
          + pad(d.getUTCSeconds())+'+00:00'
 }
    
-
+//generate random bid and offer data
 function generateRandomData(){
     //"publishBid","1","2","2012-11-01T22:08:41+00:00","1"
     var minVol = (Math.floor(Math.random() * 100));

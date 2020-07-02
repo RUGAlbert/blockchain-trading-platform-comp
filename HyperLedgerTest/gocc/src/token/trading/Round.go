@@ -21,29 +21,7 @@ import (
 	//"encoding/json"
 )
 
-// Init Implements the Init method
-/* func (MP *MarketPlace) Init(stub shim.ChaincodeStubInterface) peer.Response {
-	// Simply print a message
-	fmt.Println("Init executed in history")
-
-	// Return success
-	return shim.Success(nil)
-}
-
-// Invoke method
-func (MP *MarketPlace) Invoke(stub shim.ChaincodeStubInterface) peer.Response {
-	// Get the function name and parameters
-	funcName, args := stub.GetFunctionAndParameters()
-
-	fmt.Println(args)
-
-	if funcName == "SetNexLeader" {
-		return SetNextLeader(stub)
-	}
-
-	return shim.Error("Bad Func Name!!!")
-} */
-
+//Get the current round
 func GetCurrentRound(stub shim.ChaincodeStubInterface) int {
 	currentRound, _ := stub.GetState("Round")
 	var val int
@@ -56,6 +34,7 @@ func GetCurrentRound(stub shim.ChaincodeStubInterface) int {
 	return val
 }
 
+//go to the next round
 func SetNextRound(stub shim.ChaincodeStubInterface) peer.Response {
 	if !IsLeader(stub){
 		fmt.Printf("Is not leader\n")

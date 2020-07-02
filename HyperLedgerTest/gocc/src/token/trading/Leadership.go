@@ -25,35 +25,14 @@ import (
 	"math/rand"
 )
 
-// Init Implements the Init method
-/* func (MP *MarketPlace) Init(stub shim.ChaincodeStubInterface) peer.Response {
-	// Simply print a message
-	fmt.Println("Init executed in history")
-
-	// Return success
-	return shim.Success(nil)
-}
-
-// Invoke method
-func (MP *MarketPlace) Invoke(stub shim.ChaincodeStubInterface) peer.Response {
-	// Get the function name and parameters
-	funcName, args := stub.GetFunctionAndParameters()
-
-	fmt.Println(args)
-
-	if funcName == "SetNexLeader" {
-		return SetNextLeader(stub)
-	}
-
-	return shim.Error("Bad Func Name!!!")
-} */
-
+//returns if you are a leader
 func IsLeader(stub shim.ChaincodeStubInterface) bool {
 	id, _ := cid.GetID(stub)
 	currentId, _ := stub.GetState("Leader")
 	return reflect.DeepEqual(currentId,[]byte(id))
 }
 
+//set the next leader
 func SetNextLeader(stub shim.ChaincodeStubInterface) peer.Response {
 	/*if !IsLeader(stub){
 		fmt.Printf("Is not leader\n")
@@ -68,25 +47,7 @@ func SetNextLeader(stub shim.ChaincodeStubInterface) peer.Response {
 	return shim.Success([]byte("Selected next leader"))
 }
 
-/* func getRandomLeader(stub shim.ChaincodeStubInterface) (string, error) {
-	times, _ := stub.GetTxTimestamp()
-
-	rand.Seed(int64(times.Nanos))
-	countAsBytes, _ := stub.GetState("TraderCount")
-	count := 0
-	if countAsBytes == nil {
-		return "", errors.New("There is no registerd trader")
-	}
-	count, _ = strconv.Atoi(string(countAsBytes))
-	random := rand.Intn(count)
-	traderAsBytes, _ := stub.GetState("Trader:"+strconv.Itoa(random))
-
-	var newLeader TraderData
-	_ = json.Unmarshal(traderAsBytes, &newLeader)
-	fmt.Printf("qry: %s\n",newLeader.Id);
-	return newLeader.Id, nil
-} */
-
+//get all tickets
 func getTickets(stub shim.ChaincodeStubInterface) ([]string, error) {
 	ticketsAsBytes, _ := stub.GetState("Tickets")
 	var tickets []string
@@ -97,6 +58,7 @@ func getTickets(stub shim.ChaincodeStubInterface) ([]string, error) {
 	return tickets, nil
 }
 
+//Select random new leader based on the ticket system
 func GetRandomLeaderWithTicket(stub shim.ChaincodeStubInterface) (string, error) {
 	tickets, err := getTickets(stub)
 	if err != nil {
@@ -111,21 +73,25 @@ func GetRandomLeaderWithTicket(stub shim.ChaincodeStubInterface) (string, error)
 	return newLeaderId, nil
 }
 
+//removes the leader from the tickets
 func removeLeaderFromTickets(stub shim.ChaincodeStubInterface, tickets []string, index int){
 	tickets = remove(tickets, index)
 	saveTickets(stub, tickets)
 }
 
+//remove function
 func remove(s []string, i int) []string {
     s[len(s)-1], s[i] = s[i], s[len(s)-1]
     return s[:len(s)-1]
 }
 
+//Save all tickets again
 func saveTickets(stub shim.ChaincodeStubInterface, tickets []string){
 	ticketsAsBytes, _ := json.Marshal(tickets)
 	stub.PutState("Tickets", ticketsAsBytes)
 }
 
+//issue ticket to a certain trader
 func IssueTicket(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 	traderId := args[0]
 	trader, err := GetTrader(stub, traderId)
@@ -141,18 +107,11 @@ func IssueTicket(stub shim.ChaincodeStubInterface, args []string) peer.Response 
 	return shim.Success([]byte("Issued Ticket"))
 }
 
+//issue multiple tickets
 func IssueTickets(stub shim.ChaincodeStubInterface, args []string) peer.Response{
 	count, _ := strconv.Atoi(args[1])
 	for i := 0; i < count; i++ {
 		IssueTicket(stub, args)
 	}
 	return shim.Success([]byte("Issued Tickets"))
-}
-
-//will be removed later
-func SetFirstLeader(stub shim.ChaincodeStubInterface) peer.Response {
-	id, _ := cid.GetID(stub)
-	fmt.Printf("id: %s\n",id);
-	stub.PutState("Leader",[]byte(id))
-	return shim.Success([]byte("Selected next leader"))
 }

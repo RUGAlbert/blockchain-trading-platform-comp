@@ -8,6 +8,10 @@ function printHelp(){
 	echo "      - 'start' - starts docker containers containing the network"
 	echo "      - 'deploy' - deploy contracts"
 	echo "      - 'update' - updates contracts"
+	echo "      - 'register' - registers contracts"
+	echo "      - 'benchmark' - benchmarks it"
+	echo "      - 'configUpdate' - updates the config after changing"
+	echo "      - 'all' - start, deploy and register, all set and done for the benchmark"
 }
 
 function setGatewayDir(){
@@ -49,14 +53,17 @@ function update(){
 }
 
 function register(){
+	#register
 	set-chain-env.sh  -i '{"Args": ["register"]}'
 	
 	. set-ca-msp.sh  mary
 	chain.sh invoke
 	
+	#set the leader, since only one is registerd on chain, only one can be the leader
 	set-chain-env.sh  -i '{"Args": ["setNextLeader"]}'
 	chain.sh invoke
 	
+	#register also other users
 	set-chain-env.sh  -i '{"Args": ["register"]}'
 
 	. set-ca-msp.sh  john
@@ -68,6 +75,7 @@ function register(){
 	. set-ca-msp.sh  admin
 	chain.sh invoke
 	
+	#give some tickets to some of the users
 	set-chain-env.sh  -i '{"Args": ["issueTicket", "eDUwOTo6Q049YW5pbCxPVT11c2VyK09VPWFjbWUsTz1IeXBlcmxlZGdlcixTVD1Ob3J0aCBDYXJvbGluYSxDPVVTOjpDTj1yb290LmNhc2VydmVyLE9VPVN1cHBvcnQsTz1BY21lLFNUPU5ldyBKZXJzZXksQz1VUw=="]}'
 	chain.sh invoke
 	set-chain-env.sh  -i '{"Args": ["issueTicket", "eDUwOTo6Q049YWNtZS1hZG1pbixPVT1jbGllbnQrT1U9YWNtZSxPPUh5cGVybGVkZ2VyLFNUPU5vcnRoIENhcm9saW5hLEM9VVM6OkNOPXJvb3QuY2FzZXJ2ZXIsT1U9U3VwcG9ydCxPPUFjbWUsU1Q9TmV3IEplcnNleSxDPVVT"]}'

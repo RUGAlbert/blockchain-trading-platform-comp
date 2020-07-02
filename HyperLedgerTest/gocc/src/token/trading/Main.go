@@ -36,8 +36,6 @@ func (MP *MarketPlace) Invoke(stub shim.ChaincodeStubInterface) peer.Response {
 			response = MP.getCurrentOffersAndBids(stub)
 		case "setNextLeader":
 			response = SetNextLeader(stub)
-		case "setFirstLeader":
-			response = SetFirstLeader(stub)
 		case "setNextRound":
 			response = SetNextRound(stub)
 		case "addMatch":

@@ -18,12 +18,14 @@ type TraderData struct {
 	TicketAmount 	uint 	`json:"ticketAmount"`
 }
 
+//Check if you are a registerd trader
 func IsRegisterdTrader(stub shim.ChaincodeStubInterface) bool {
 	id, _ := cid.GetID(stub)
 	matchAsBytes, err := stub.GetState("Trader:" + string(id))
 	return !(err != nil || matchAsBytes == nil)
 }
 
+//Get trader based on id of 
 func GetTrader(stub shim.ChaincodeStubInterface, id string) (TraderData, error) {
 	traderAsBytes, err := stub.GetState("Trader:"+id)
 	var trader TraderData
@@ -38,12 +40,14 @@ func GetTrader(stub shim.ChaincodeStubInterface, id string) (TraderData, error) 
 	return trader, nil
 }
 
+//Save trader
 func SaveTrader(stub shim.ChaincodeStubInterface, trader TraderData, uid string) {
 	jsonData, _ := json.Marshal(trader)
 	id := "Trader:"+uid
 	stub.PutState(id, jsonData)
 }
 
+//Register trader, can only be called by trader himself
 func RegisterTrader(stub shim.ChaincodeStubInterface) peer.Response {
 	uid, _ := cid.GetID(stub)
 	count := 0

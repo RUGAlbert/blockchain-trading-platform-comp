@@ -52,6 +52,7 @@ func (MP *MarketPlace) publishBid(stub shim.ChaincodeStubInterface, args []strin
 	return MP.insertData(stub, args[0], args[1],args[2],"0",args[3],false)
 }
 
+//inserts data, an offer or bid
 func (MP *MarketPlace)insertData(stub shim.ChaincodeStubInterface, minVol string, maxVol string, date string, minPrice string, maxPrice string, isOffer bool) peer.Response{
 	//get unique id of user
 	uid, _ := cid.GetID(stub)
@@ -77,6 +78,7 @@ func (MP *MarketPlace)insertData(stub shim.ChaincodeStubInterface, minVol string
 	return shim.Success([]byte("Created offer or bid"))
 }
 
+//get all offers and bids
 func (MP *MarketPlace)getOffersAndBids(stub shim.ChaincodeStubInterface) peer.Response {
 	resultJSON, err := ExecuteQuery(stub, "{\"selector\": { \"docType\": \"OfferOrBidData\"}}")
 	if err != nil {
@@ -86,6 +88,7 @@ func (MP *MarketPlace)getOffersAndBids(stub shim.ChaincodeStubInterface) peer.Re
 	 return shim.Success([]byte(resultJSON))
 }
 
+//get all offers and bids in current round
 func (MP *MarketPlace)getCurrentOffersAndBids(stub shim.ChaincodeStubInterface) peer.Response {
 	query := "{\"selector\": { \"docType\": \"OfferOrBidData\",\"round\": "+ strconv.Itoa(GetCurrentRound(stub)) +"}}"
 	fmt.Printf("%s\n",query)

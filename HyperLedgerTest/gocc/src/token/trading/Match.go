@@ -21,6 +21,7 @@ import (
 	"strconv"
 )
 
+//All data used to save a match
 type MatchData struct {
 	Id				string  	`json:"id"`
 	DocType			string  	`json:"docType"`
@@ -51,7 +52,7 @@ func AddMatch(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 }
 
 
-//Get of user
+//Get all matches of the user
 func GetMatchesOfUser(stub shim.ChaincodeStubInterface) peer.Response {
 	id, _ := cid.GetID(stub)
 	qry := "{"
@@ -68,7 +69,7 @@ func GetMatchesOfUser(stub shim.ChaincodeStubInterface) peer.Response {
 	return shim.Success([]byte(resultJSON))
 }
 
-//as argument the id of the accepted match
+//as argument the id of the accepted match to get a certain match
 func GetMatch(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 	resultJSON, err := ExecuteQuery(stub, "{\"selector\": { \"docType\": \"MatchData\", \"id\":\"" + args[0] + "\"}}")
 	if err != nil {
@@ -77,6 +78,7 @@ func GetMatch(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 	return shim.Success([]byte(resultJSON))
 }
 
+//get match based on a string with an expected stage, otherwise it will return an error
 func getMatchForUse(stub shim.ChaincodeStubInterface, id string, expectedStage int) (MatchData, error){
 	var result MatchData
 
@@ -99,7 +101,7 @@ func getMatchForUse(stub shim.ChaincodeStubInterface, id string, expectedStage i
 	return result, nil
 }
 
-//as argument the id of the match
+//This will be used to accept a match, based on the id id of the match
 func AcceptMatch(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 	id, _ := cid.GetID(stub)
 
@@ -126,6 +128,7 @@ func AcceptMatch(stub shim.ChaincodeStubInterface, args []string) peer.Response 
 	return shim.Success([]byte("Accepted match"))
 }
 
+//reject a certain match, can only be done if not both parties have accepted it
 func RejectMatch(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 	id, _ := cid.GetID(stub)
 
@@ -149,6 +152,7 @@ func RejectMatch(stub shim.ChaincodeStubInterface, args []string) peer.Response 
 	return shim.Success([]byte("Rejected match"))
 }
 
+//Claims a match and if it is allowed let is go to the next stage
 func claimer(stub shim.ChaincodeStubInterface, currentStage int, isOffer bool, mid string) peer.Response{
 	id, _ := cid.GetID(stub)
 
@@ -174,18 +178,22 @@ func claimer(stub shim.ChaincodeStubInterface, currentStage int, isOffer bool, m
 	return shim.Success([]byte("Went to next stage"))
 }
 
+//Claim that the volume is send
 func ClaimVolume(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 	return claimer(stub, 1, true, args[0])
 }
 
+//Confirm that the volume is send
 func ConfirmVolume(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 	return claimer(stub, 2, false, args[0])
 }
 
+//Claim that the payment is send
 func ClaimPayment(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 	return claimer(stub, 3, false, args[0])
 }
 
+//Confirm that the payment is send
 func ConfirmPayment(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 	return claimer(stub, 4, true, args[0])
 }
